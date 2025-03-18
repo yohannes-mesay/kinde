@@ -2,16 +2,19 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import UsersTable from "./components/user-table";
+import OrganizationsTable from "./components/org-table";
 
 export default function Home() {
   const [users, setUsers] = useState([]);
+  const [org, setOrg] = useState([]);
+
   useEffect(() => {
     (async () => {
       try {
         const res = await fetch("http://localhost:3000/api/user");
         const data = await res.json();
-        setUsers(data.users);
-        console.log("data", data);
+        setUsers(data.users.users);
+        setOrg(data.organizations.organizations);
       } catch (error) {
         console.error(error);
       }
@@ -21,6 +24,7 @@ export default function Home() {
   return (
     <div className="container">
       <UsersTable users={users} />
+      <OrganizationsTable organizations={org} />
       {/* <div className="card hero">
         <p className="text-display-1 hero-title">
           Let’s start authenticating <br /> with KindeAuth

@@ -1,16 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
 import UsersTable from "../components/user-table";
+import OrganizationsTable from "../components/org-table";
 export default function Dashboard() {
   const [users, setUsers] = useState([]);
+  const [org, setOrg] = useState([]);
 
   useEffect(() => {
     (async () => {
       try {
         const res = await fetch("http://localhost:3000/api/user");
         const data = await res.json();
-        setUsers(data.users);
-        console.log("data", data);
+        setUsers(data.users.users);
+        setOrg(data.organizations.organizations);
       } catch (error) {
         console.error(error);
       }
@@ -19,6 +21,7 @@ export default function Dashboard() {
   return (
     <div className="container">
       <UsersTable users={users} />
+      <OrganizationsTable organizations={org} />
       {/* <div className="card start-hero">
         <p className="text-body-2 start-hero-intro">Woohoo!</p>
         <p className="text-display-2">
